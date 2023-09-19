@@ -4,13 +4,22 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Laravel 10 CRUD Segundo Parcial - Ferreteria</h2>
+                <h2>Segundo Parcial - Ferreteria - Laravel</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('products.create') }}"> Create New Product</a>
+                <a class="btn btn-success" href="{{ route('products.create') }}"> Ingresar nuevo producto</a>
             </div>
         </div>
     </div>
+
+    <div class="pull-right">
+    <form action="{{ route('products.index') }}" method="GET" class="form-inline">
+        <div class="form-group">
+            <input type="text" name="search" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+</div>
    
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -21,9 +30,9 @@
     <table class="table table-bordered">
         <tr>
             <th>No</th>
-            <th>Name</th>
-            <th>Details</th>
-            <th width="280px">Action</th>
+            <th>Nombre</th>
+            <th>Detalles</th>
+            <th width="280px">Acción</th>
         </tr>
         @foreach ($products as $product)
         <tr>
@@ -33,14 +42,14 @@
             <td>
                 <form action="{{ route('products.destroy',$product->id) }}" method="POST">
    
-                    <a class="btn btn-info" href="{{ route('products.show',$product->id) }}">Show</a>
+                    <a class="btn btn-info" href="{{ route('products.show',$product->id) }}">Mostrar</a>
     
-                    <a class="btn btn-primary" href="{{ route('products.edit',$product->id) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ route('products.edit',$product->id) }}">Editar</a>
    
                     @csrf
                     @method('DELETE')
       
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
                 </form>
             </td>
         </tr>

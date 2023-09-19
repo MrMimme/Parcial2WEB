@@ -13,12 +13,21 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $products = Product::latest()->paginate(5);
-        
-        return view('products.index',compact('products'))
-                    ->with('i', (request()->input('page', 1) - 1) * 5);
+        $search = $request->input('search');
+
+        // Use query builder to handle search if provided
+        $query = Product::latest();
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('detail', 'like', '%' . $search . '%');
+        }
+
+        $products = $query->paginate(5)->appends(['search' => $search]);
+
+        return view('products.index', compact('products'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
     }
   
     /**
